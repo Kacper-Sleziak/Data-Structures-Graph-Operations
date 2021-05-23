@@ -14,3 +14,8 @@ int Edge::get_first_vertex() {
 int Edge::get_second_vertex() {
     return this -> vertex_other;
 }
+
+int Edge::get_weight() {
+    return this -> weight;
+}
+

@@ -286,5 +286,5 @@ void MST_Kruskal::MST_handler() {
     std::cout<<std::endl;
 
     int weigth = this -> count_weigth();
-    std::cout<<"Waga Drzewa MST: "<<weigth;
+    std::cout<<"Waga Drzewa MST: "<<weigth<<std::endl<<std::endl;
 }

@@ -20,6 +20,7 @@ public:
     void show_edge();
     int get_first_vertex();
     int get_second_vertex();
+    int get_weight();
 };
 
 
