@@ -87,12 +87,9 @@ void MST_Prim::display_mst_matrix(){
     for(int i = 0 ; i < number_of_vertexes ; i++) {
         std::cout<<std::endl;
         for (int k = 0; k < number_of_vertexes; k++) {
-            std::cout << matrix[i][k] <<", ";
+            std::cout << matrix[i][k] <<" ";
         }
-
     }
-
-
 
 }
 
@@ -169,8 +166,8 @@ int * MST_Prim::DFS(int ** matrix, bool *visited, int *keys) {
     if (end_v != -1){
         keys[end_v] = shortest_path;
         visited[end_v] = true;
-        matrix[start_v][end_v] = 0;
-        DFS(matrix, visited, keys);
+        matrix[start_v][end_v] = 0;                                 //polaczenie, ktore dodalismy do mst
+        DFS(matrix, visited, keys);                                 // ustawiamy na 0 aby go ponownie nierozpatrywać
     }
 
     return keys;
@@ -209,7 +206,10 @@ void MST_Prim::MST_handler() {
     this -> display_mst_matrix();
     std::cout<<std::endl<<std::endl;
 
-    std::cout<<"Waga drzewa MST: "<<std::endl;
+    std::cout<<"Liczba Krawedzi MST: "<<this -> number_of_vertexes - 1;
+    std::cout<<std::endl;
+
+    std::cout<<"Waga drzewa MST: ";
     int x = this -> count_weigth();
     std::cout<<x<<std::endl<<std::endl;
 }

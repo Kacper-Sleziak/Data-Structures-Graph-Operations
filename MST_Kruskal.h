@@ -24,7 +24,7 @@ class MST_Kruskal {
         int ** create_checking_matrix(int v_1, int v_2, int mst_actual_size);   // funkcja tworzy macierz za pomoca krawędzi mst oraz kolejnej krawedzi dodanej z kolejki
         void create_mst_by_kruskal_algorithm();                                 // tworzenie drzewa według algorytmu kruskala
         void display_mst_edges();                                               // wyswietlanie krawedzi mst
-        int count_weigth();                                                     // funkcja licząca wage drzewa
+        int count_weight();                                                     // funkcja licząca wage drzewa
         void display_queue();                                                   // wyswietlanie kolejki
         bool DFS(int ** checking_matrix, int v, bool visited[], int parents[], bool is_cycle); //funckja przeszukujaca
         void display_mst_matrix();                                              // wyswietla macierz sasiedztwa dla MST

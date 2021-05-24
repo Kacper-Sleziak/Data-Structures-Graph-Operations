@@ -55,7 +55,6 @@ void MST_Kruskal::read_file(std::string file_name){
         }
     }
     myfile.close();
-    //C:\Users\PC\CLionProjects\Sdizo\mst.txt
     queue = graph -> get_list_of_edges();   // tworzymy jeszcze nieposortowaną kolejke
 
     this -> number_of_vertexes = n;
@@ -210,7 +209,7 @@ int ** MST_Kruskal::create_checking_matrix(int v_1, int v_2, int mst_actual_size
     return matrix;
 }
 
-int MST_Kruskal::count_weigth() {
+int MST_Kruskal::count_weight() {
     int weight = 0;
 
     for (int i = 0; i < this -> number_of_vertexes - 1 ; i++){
@@ -249,7 +248,7 @@ void MST_Kruskal::display_mst_matrix() {
 
     for(int i = 0 ; i < rows ; i++){
         for(int k = 0 ; k < cols ; k++){
-            std::cout<<matrix[i][k]<<", ";
+            std::cout<<matrix[i][k]<<" ";
         }
         std::cout<<std::endl;
     }
@@ -285,6 +284,9 @@ void MST_Kruskal::MST_handler() {
     this -> display_mst_matrix();
     std::cout<<std::endl;
 
-    int weigth = this -> count_weigth();
+    std::cout<<"Liczba Krawedzi MST: "<<this -> number_of_vertexes - 1;
+    std::cout<<std::endl;
+
+    int weigth = this->count_weight();
     std::cout<<"Waga Drzewa MST: "<<weigth<<std::endl<<std::endl;
 }
