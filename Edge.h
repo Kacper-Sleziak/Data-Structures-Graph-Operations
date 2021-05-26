@@ -24,4 +24,4 @@ public:
 };
 
 
-#endif //DATA_STRUCTURES_GRAPH_OPERATIONS_EDGE_H
+#endif

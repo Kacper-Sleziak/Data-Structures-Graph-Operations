@@ -213,5 +213,3 @@ void MST_Prim::MST_handler() {
     int x = this -> count_weigth();
     std::cout<<x<<std::endl<<std::endl;
 }
-
-
