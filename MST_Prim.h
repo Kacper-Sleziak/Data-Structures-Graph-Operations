@@ -7,7 +7,7 @@
 
 class MST_Prim {
     public:
-        void MST_handler();
+        void MST_handler(std::string file_name);
 
     private:
         int start_vertex;

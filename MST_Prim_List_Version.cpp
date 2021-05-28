@@ -28,7 +28,12 @@ void MST_Prim_List_Version::read_file(std::string file_name) {
     this -> number_of_vertexes = n;
 
     counter = 0;
-    this -> list = new std::vector<Node> [n];
+
+    list = new Node*[n];
+
+    for(int i = 0 ; i < number_of_vertexes; i++){
+        list[i] = new Node(-1, -1, NULL);
+    }
 
     int v;
     int w;
@@ -50,36 +55,45 @@ void MST_Prim_List_Version::read_file(std::string file_name) {
             weight = data;
             counter = 0;
 
-            Node node_v(v, weight, 0);
-            Node node_w(w, weight, 0);
+            Node *node_v = new Node(v, weight, NULL);
+            Node *node_w = new Node(w, weight, NULL);
 
-            list[w].push_back(node_v);
-            list[v].push_back(node_w);
+            node_w = list[w];
 
-            int size_v = list[v].size();
-            int size_w = list[w].size();
+            if(node_w->next != NULL) {
+                do {
+                    node_w = node_w->next;
 
-            if(size_v > 0){
-                int previous_index = size_v - 1;
-                list[v][previous_index].next = &list[v][size_v];
+                } while (node_w->next != NULL);
             }
+            node_w->next = node_v;
 
-            if(list[w].size() > 0){
-                int previous_index = size_w - 1;
-                list[w][previous_index].next = &list[v][size_w];
+            Node *node_helper = new Node(w, weight, NULL);
+
+            node_v = list[v];
+            if(node_v->next != NULL){
+                do {
+                    node_v = node_v->next;
+
+                } while (node_v->next != NULL);
             }
+            node_v->next = node_helper;
         }
     }
 }
 
 void MST_Prim_List_Version::show_list(){
+    Node * node;
     for(int i = 0 ; i < number_of_vertexes ; i++){
-        int size = list[i].size();
         std::cout<<"lista wierzcholka " << i<<std::endl;
+        node = list[i];
 
-        for(int k = 0 ; k< size ; k++){
-            list[i][k].show_node();
-            std::cout<<std::endl;
+        if(node->next != NULL) {
+            do {
+                node = node->next;
+                node -> show_node();
+                std::cout<<std::endl;
+            } while (node->next != NULL);
         }
         std::cout<<std::endl;
     }
@@ -92,12 +106,21 @@ void MST_Prim_List_Version::show_mst_edges() {
     }
 }
 
+int MST_Prim_List_Version::get_MST_weight() {
+    int weight = 0;
+
+    for(int i = 0 ; i < number_of_vertexes - 1 ; i++){
+        weight += mst_edges[i].get_weight();
+    }
+
+    return weight;
+}
+
 
 void MST_Prim_List_Version::create_mst_by_prim_algorithm() {
 
     bool * visited = new bool [this -> number_of_vertexes];
 
-    int max = INT_MAX;
 
     for (int i = 0 ; i < number_of_vertexes ; i++){
         if (i == 0){
@@ -131,48 +154,67 @@ void MST_Prim_List_Version::DFS(bool *visited) {
 
     int end_v = -1;                                             //index wierzcholka koncowego krawdz
     int start_v = -1;
-    int index_to_delete;
+    Node *helper;
 
     for (int k = 0 ; k < this -> number_of_vertexes ; k++) {
         if (visited[k]) {                                       //przeszukujemy tylko krawedzie odwiedzonych wierzcholkow
 
-            Node *node = list[k][0];
+            Node *node = list[k];           //jesli ta sama krawedz jest w dwoch miejsca
+                                            // to wartosc mis_in_mst zmieniam tylko w jednym z tych miejsc
+            while (true) {
+                node = node->next;
+                if(node == NULL){
+                    break;
+                }
 
-            for(int i = 0 ; i < list[k].size() ; i++){
-                if (node.is_in_mst == false) {
-                    if (&node.weight < shortest_path) {
-                        shortest_path =& node.weight;
+                if (node->is_in_mst == false) {
+                    if (node->weight < shortest_path) {
+                        shortest_path = node->weight;
                         start_v = k;
-                        end_v = &node.vertex;
+                        end_v = node -> vertex;
+                        helper = node;
                     }
                 }
-                node = node.next;
-                node.show_node();
-                std::cout<<std::endl;
             }
         }
     }
 
     if (end_v != -1){
         Edge edge(start_v, end_v, shortest_path);
+        helper -> is_in_mst = true;
+        this -> mst_edges[mst_size] = edge;
+        mst_size ++;
         visited[end_v] = true;
+
+        Node * same_node_of_other_vertex = list[end_v];
+
+        while (true){
+            if(helper -> weight == same_node_of_other_vertex -> weight and same_node_of_other_vertex->vertex == start_v){
+                same_node_of_other_vertex ->is_in_mst = true;
+                break;
+            }
+
+            same_node_of_other_vertex = same_node_of_other_vertex -> next;
+        }
 
         DFS(visited);
     }
 }
 
-void MST_Prim_List_Version::MST_handler(){
-    std::string file_name;
+void MST_Prim_List_Version::MST_handler(std::string file_name){
 
-    std::cout<<"Wczytaj plik: ";
-    std::cin>> file_name;
 
     this -> read_file(file_name);
-    this -> show_list();
 
     this->create_mst_by_prim_algorithm();
 
-    std::cout<<"MST krawędzi: "<<std::endl;
+    std::cout<<"MST krawedzi: "<<std::endl;
     this -> show_mst_edges();
+    std::cout<<std::endl;
+
+    std::cout<<"Waga drzewa MST: ";
+    std::cout<<this->get_MST_weight();
+
+    std::cout<<std::endl<<std::endl;
 }
 

@@ -3,20 +3,19 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include "Node.h"
 #include "Edge.h"
 
 class MST_Prim_List_Version {
     public:
-        void MST_handler();                     // główna funkcja obsługująca działanie programu
+        void MST_handler(std::string file_name); // główna funkcja obsługująca działanie programu
 
     private:
         int number_of_vertexes;                 // liczba wierzchołków grafu
         int number_of_edges;                    // liczba krawędzi grafu (nie mylić z mst)
         int mst_size = 0;                       // wielkosc mst w trakcie pracy z kolejka
         Edge * mst_edges;
-        std::vector<Node> * list;
+        Node ** list;
 
 
         void read_file(std::string file_name);                                  // funckja wczytująca plik tekstow
@@ -24,6 +23,7 @@ class MST_Prim_List_Version {
         void show_list();
         bool is_vertex_in_mst(int v, int w, int weight);
         void show_mst_edges();
+        int get_MST_weight();
         void DFS(bool visited[]);
 };
 

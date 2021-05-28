@@ -80,8 +80,8 @@ void MST_Prim::display_mst_matrix(){
         int v_1 = this->mst_edges[i].get_first_vertex();
         int v_2 = this->mst_edges[i].get_second_vertex();
 
-        matrix[v_1][v_2] = 1;
-        matrix[v_2][v_1] = 1;
+        matrix[v_1][v_2] = this->mst_edges[i].get_weight();
+        matrix[v_2][v_1] = this->mst_edges[i].get_weight();
     }
 
     for(int i = 0 ; i < number_of_vertexes ; i++) {
@@ -184,27 +184,14 @@ int MST_Prim::count_weigth() {
 }
 
 
-void MST_Prim::MST_handler() {
-    std::string file_name;
-
-    std::cout<<"Podaj nazwe pliku z ktorego chcesz utworzyc MST: ";
-    std::cin >> file_name;
-
+void MST_Prim::MST_handler(std::string file_name) {
     this -> read_file(file_name);
-
-    std::cout<<"Krawedzie Grafu: "<<std::endl;
-    this -> graph -> show_edges();
-    std::cout<<std::endl;
 
     this ->create_mst_by_prim_algorithm();
 
     std::cout<<"Krawedzie MST: "<<std::endl;
     this -> display_mst_edges();
     std::cout<<std::endl;
-
-    std::cout<<"Macierz Sasiedztwa: ";
-    this -> display_mst_matrix();
-    std::cout<<std::endl<<std::endl;
 
     std::cout<<"Liczba Krawedzi MST: "<<this -> number_of_vertexes - 1;
     std::cout<<std::endl;
