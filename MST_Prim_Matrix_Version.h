@@ -1,11 +1,11 @@
-#ifndef DATA_STRUCTURES_GRAPH_OPERATIONS_MST_PRIM_H
-#define DATA_STRUCTURES_GRAPH_OPERATIONS_MST_PRIM_H
+#ifndef DATA_STRUCTURES_GRAPH_OPERATIONS_MST_PRIM_MATRIX_VERSION_H
+#define DATA_STRUCTURES_GRAPH_OPERATIONS_MST_PRIM_MATRIX_VERSION_H
 
 #include <iostream>
 #include "Graph.h"
 #include "Edge.h"
 
-class MST_Prim {
+class MST_Prim_Matrix_Version {
     public:
         void MST_handler(std::string file_name);
 

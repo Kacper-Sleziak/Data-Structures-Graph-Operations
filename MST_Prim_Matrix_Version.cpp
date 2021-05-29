@@ -1,7 +1,7 @@
-#include "MST_Prim.h"
+#include "MST_Prim_Matrix_Version.h"
 #include <fstream>
 
-void MST_Prim::read_file(std::string file_name) {
+void MST_Prim_Matrix_Version::read_file(std::string file_name) {
     std::fstream myfile(file_name, std::ios_base::in);
     int counter = 0;
 
@@ -58,7 +58,7 @@ void MST_Prim::read_file(std::string file_name) {
     graph ->create_weighted_matrix();
 }
 
-void MST_Prim::display_mst_matrix(){
+void MST_Prim_Matrix_Version::display_mst_matrix(){
 
 
     int rows = this -> number_of_vertexes;
@@ -93,14 +93,14 @@ void MST_Prim::display_mst_matrix(){
 
 }
 
-void MST_Prim::display_mst_edges() {
+void MST_Prim_Matrix_Version::display_mst_edges() {
     for (int i = 0 ; i < this -> number_of_vertexes - 1; i++){
         mst_edges[i].show_edge();
         std::cout<<std::endl;
     }
 }
 
-void MST_Prim::create_mst_by_prim_algorithm(){
+void MST_Prim_Matrix_Version::create_mst_by_prim_algorithm(){
 
 
     bool * visited = new bool [this -> number_of_vertexes];
@@ -143,7 +143,7 @@ void MST_Prim::create_mst_by_prim_algorithm(){
 
 }
 
-int * MST_Prim::DFS(int ** matrix, bool *visited, int *keys) {
+int * MST_Prim_Matrix_Version::DFS(int ** matrix, bool *visited, int *keys) {
     int shortest_path = INT_MAX;
 
     int end_v = -1;                                             //index wierzcholka koncowego krawdz
@@ -173,7 +173,7 @@ int * MST_Prim::DFS(int ** matrix, bool *visited, int *keys) {
     return keys;
 }
 
-int MST_Prim::count_weigth() {
+int MST_Prim_Matrix_Version::count_weigth() {
     int weigth = 0;
 
     for(int i = 0 ; i<number_of_vertexes - 1 ; i++){
@@ -184,7 +184,7 @@ int MST_Prim::count_weigth() {
 }
 
 
-void MST_Prim::MST_handler(std::string file_name) {
+void MST_Prim_Matrix_Version::MST_handler(std::string file_name) {
     this -> read_file(file_name);
 
     this ->create_mst_by_prim_algorithm();

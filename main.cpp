@@ -2,7 +2,7 @@
 #include "fstream"
 
 #include "MST_Kruskal.h"
-#include "MST_Prim.h"
+#include "MST_Prim_Matrix_Version.h"
 #include "MST_Prim_List_Version.h"
 
 #include "Shortest_Path_Dijkstra_Matrix.h"
@@ -32,7 +32,7 @@ void menu_mst(){
         }
 
         else if (x == '2'){
-           MST_Prim MST_1;
+           MST_Prim_Matrix_Version MST_1;
            MST_1.MST_handler(file_name);
         }
 
