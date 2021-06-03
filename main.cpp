@@ -28,7 +28,7 @@ void menu_mst(){
 
         if (x == '1'){
             MST_Kruskal mst;
-            mst.MST_handler();
+            mst.MST_handler(file_name);
         }
 
         else if (x == '2'){
@@ -124,5 +124,5 @@ void menu(){
 };
 
 int main() {
-   menu();
+  menu();
 }

@@ -7,9 +7,11 @@
 
 class Shortest_Path_Dijkstra_List {
     public:
-        void Path_handler(std::string file_name);
+        void Path_handler(std::string file_name );
+        ~Shortest_Path_Dijkstra_List();
 
-    private:
+
+private:
         Node ** list;
         int number_of_vertexes;
         int number_of_edges;

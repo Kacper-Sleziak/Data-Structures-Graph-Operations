@@ -174,7 +174,6 @@ void Shortest_Path_Dijkstra_List::Dijkstra_algorithm() {
         new_unvisited_array = NULL;
 
 
-        std::cout<<"xd";
         this -> Dijkstra_algorithm();
     }
 }
@@ -262,6 +261,23 @@ void Shortest_Path_Dijkstra_List::Path_handler(std::string file_name) {
     this -> display_shortest_paths();
 
     std::cout<<std::endl<<std::endl;
+}
+
+Shortest_Path_Dijkstra_List::~Shortest_Path_Dijkstra_List() {
+    for(int i = 0 ; i<number_of_vertexes ; i++){
+        delete[] list[i];
+    }
+    delete[] list;
+    delete[] keys;
+    delete[] previous;
+    delete[] visited;
+    delete[] unvisited;
+
+    list = nullptr;
+    keys = nullptr;
+    previous = nullptr;
+    visited = nullptr;
+    unvisited = nullptr;
 }
 
 

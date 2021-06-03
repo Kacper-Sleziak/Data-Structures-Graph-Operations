@@ -234,8 +234,8 @@ void MST_Kruskal::display_mst_matrix() {
         int v = mst_edges[i].get_first_vertex();
         int w = mst_edges[i].get_second_vertex();
 
-        matrix[v][w] = 1;
-        matrix[w][v] = 1;
+        matrix[v][w] = mst_edges[i].get_weight();
+        matrix[w][v] = mst_edges[i].get_weight();
     }
 
     for(int i = 0 ; i < rows ; i++){                 // pozostale miejsca w macierzy wypelniam zerami
@@ -254,12 +254,7 @@ void MST_Kruskal::display_mst_matrix() {
     }
 }
 
-void MST_Kruskal::MST_handler() {
-
-    std::string file_name;
-
-    std::cout<<"Podaj nazwe pliku z ktorego chcesz utworzyc MST: ";
-    std::cin >> file_name;
+void MST_Kruskal::MST_handler(std::string file_name) {
 
     this -> read_file(file_name);
 
@@ -280,9 +275,6 @@ void MST_Kruskal::MST_handler() {
     this -> display_mst_edges();
     std::cout<<std::endl;
 
-    std::cout<<"Macierz Sasiedztwa: "<<std::endl;
-    this -> display_mst_matrix();
-    std::cout<<std::endl;
 
     std::cout<<"Liczba Krawedzi MST: "<<this -> number_of_vertexes - 1;
     std::cout<<std::endl;

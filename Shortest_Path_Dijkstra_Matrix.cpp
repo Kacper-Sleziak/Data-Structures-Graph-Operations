@@ -1,5 +1,8 @@
 #include <fstream>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+
 #include "Shortest_Path_Dijkstra_Matrix.h"
 
 void Shortest_Path_Dijkstra_Matrix::read_file(std::string file_name) {
@@ -32,48 +35,48 @@ void Shortest_Path_Dijkstra_Matrix::read_file(std::string file_name) {
         counter++;
     }
 
-        this->number_of_edges = e;
-        this->number_of_vertexes = n;
-        this->start_vertex = start_v;
+    this->number_of_edges = e;
+    this->number_of_vertexes = n;
+    this->start_vertex = start_v;
 
-        this->matrix = new int * [n];
+    this->matrix = new int * [n];
 
-        for(int i = 0 ; i < n ; i++){
-            matrix[i] = new int [n];
-        }
-
-        for(int i = 0 ; i < n ; i++){
-            for(int k = 0 ; k < n ; k++){
-                matrix[i][k] = 0;
-            }
-        }
-
-        int v;
-        int w;
-        int weight;
-        counter = 0;
-
-        while (myfile >> data){
-
-            if (counter % 3 == 0){
-                v = data;
-                counter ++;
-            }
-
-            else if (counter % 3 == 1){
-                w = data;
-                counter ++;
-            }
-
-            else if(counter % 3 == 2){
-                weight = data;
-                matrix[v][w] = weight;
-                counter = 0;
-            }
-        }
-
-        myfile.close();
+    for(int i = 0 ; i < n ; i++){
+        matrix[i] = new int [n];
     }
+
+    for(int i = 0 ; i < n ; i++){
+        for(int k = 0 ; k < n ; k++){
+            matrix[i][k] = 0;
+        }
+    }
+
+    int v;
+    int w;
+    int weight;
+    counter = 0;
+
+    while (myfile >> data){
+
+        if (counter % 3 == 0){
+            v = data;
+            counter ++;
+        }
+
+        else if (counter % 3 == 1){
+            w = data;
+            counter ++;
+        }
+
+        else if(counter % 3 == 2){
+            weight = data;
+            matrix[v][w] = weight;
+            counter = 0;
+        }
+    }
+
+    myfile.close();
+}
 
 
 void Shortest_Path_Dijkstra_Matrix::show_matrix() {
@@ -142,26 +145,26 @@ void Shortest_Path_Dijkstra_Matrix::Dijkstra_algorithm() {
     int shortest_path = INT_MAX;
     int checking_vertex = visited[visited_size -1];
 
-        for(int k = 0 ; k < number_of_vertexes ; k++) {
+    for(int k = 0 ; k < number_of_vertexes ; k++) {
 
-            int path = matrix[checking_vertex][k];
+        int path = matrix[checking_vertex][k];
 
-            if (path != 0) {
-                if (!is_vertex_visited(k)) {
-                    if(path + keys[checking_vertex] < keys[k]) {
+        if (path != 0) {
+            if (!is_vertex_visited(k)) {
+                if(path + keys[checking_vertex] < keys[k]) {     //relaksacja krawedzi
 
-                        keys[k] = path + keys[checking_vertex];     //koszt dojscia od wierzcholka startowego
-                        previous[k] = checking_vertex;
-                    }
-
-                    if(path < shortest_path){
-                        new_visited = k;                           // nastepny wierzcholek do sprawdzenia
-                        shortest_path = path;
-                    }
-
+                    keys[k] = path + keys[checking_vertex];     //koszt dojscia od wierzcholka startowego
+                    previous[k] = checking_vertex;
                 }
+
+                if(path < shortest_path){
+                    new_visited = k;                           // nastepny wierzcholek do sprawdzenia
+                    shortest_path = path;
+                }
+
             }
         }
+    }
 
 
     if(new_visited != -1){
@@ -189,11 +192,19 @@ void Shortest_Path_Dijkstra_Matrix::Dijkstra_algorithm() {
             new_unvisited_array[i] = unvisited [i];
         }
 
+        int * helper = unvisited;
         unvisited = new_unvisited_array;
+        delete[] helper;
+
         new_unvisited_array = NULL;
 
 
         Dijkstra_algorithm();
+    }
+
+    else{
+        delete [] unvisited;
+        delete [] visited;
     }
 }
 
@@ -244,4 +255,14 @@ void Shortest_Path_Dijkstra_Matrix::path_handler(std::string file_name) {
 }
 
 
+Shortest_Path_Dijkstra_Matrix::~Shortest_Path_Dijkstra_Matrix() {
+    delete[] keys;
+    delete[] previous;
+
+    for(int i = 0 ; i< number_of_vertexes ; i++){
+        delete[] matrix[i];
+    }
+
+    delete[] matrix;
+}
 

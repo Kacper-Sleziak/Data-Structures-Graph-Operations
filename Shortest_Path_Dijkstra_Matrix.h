@@ -7,8 +7,11 @@
 class Shortest_Path_Dijkstra_Matrix {
     public:
         void path_handler(std::string file_name);
+        void path_random_handler();
+        ~Shortest_Path_Dijkstra_Matrix();
 
-    private:
+
+private:
         int ** matrix;
         int * keys;                 // koszty dojscia do danego wierzcholka
         int * previous;             // tablica poprzednikow
@@ -28,6 +31,7 @@ class Shortest_Path_Dijkstra_Matrix {
         void Dijkstra_algorithm();
         bool is_vertex_visited(int v);
         void display_shortest_paths();
+        void generate_random(int size, float density);
 
 };
 

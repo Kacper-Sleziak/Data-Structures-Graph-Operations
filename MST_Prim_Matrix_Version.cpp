@@ -134,11 +134,11 @@ void MST_Prim_Matrix_Version::create_mst_by_prim_algorithm(){
     this -> mst_edges = new Edge [this -> number_of_vertexes - 1];
 
     for(int i = 1 ; i < this -> number_of_vertexes ; i++){
-            int weight = keys[i];
+        int weight = keys[i];
 
-            Edge mst_edge = graph->find_edge(i, weight);
-            int x = mst_edge.get_weight();
-            mst_edges[i-1] = mst_edge;
+        Edge mst_edge = graph->find_edge(i, weight);
+        int x = mst_edge.get_weight();
+        mst_edges[i-1] = mst_edge;
     }
 
 }
@@ -152,8 +152,8 @@ int * MST_Prim_Matrix_Version::DFS(int ** matrix, bool *visited, int *keys) {
     for (int k = 0 ; k < this -> number_of_vertexes ; k++) {
         if (visited[k]) {                                           //przeszukujemy tylko krawedzie odwiedzonych wierzcholkow
             for (int i = 0; i < this->number_of_vertexes; i++) {
-                if (matrix[k][i] != 0 and !visited[i]) {
-                    if (matrix[k][i] < shortest_path) {
+                if (matrix[k][i] != 0 and !visited[i]) {            //sprawdzamy czy krawedz ni laczy sie z odiwedzonym wierzcholkiem
+                    if (matrix[k][i] < shortest_path) {             //sprawdzamy czy dana krawedz jest najkrotsza w obiegu
                         shortest_path = matrix[k][i];
                         end_v = i;
                         start_v = k;

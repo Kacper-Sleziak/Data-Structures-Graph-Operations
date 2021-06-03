@@ -7,7 +7,7 @@
 class MST_Kruskal {
 
     public:
-        void MST_handler();                     // główna funkcja obsługująca działanie programu
+        void MST_handler(std::string file_name);                     // główna funkcja obsługująca działanie programu
 
     private:
         Graph * graph;                          // wskaźnik na graf z którego zostanie stworzone drzewo MST

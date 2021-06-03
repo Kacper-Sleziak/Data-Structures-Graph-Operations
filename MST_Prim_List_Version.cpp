@@ -30,6 +30,7 @@ void MST_Prim_List_Version::read_file(std::string file_name) {
     counter = 0;
 
     list = new Node*[n];
+    mst_edges = new Edge[n-1];
 
     for(int i = 0 ; i < number_of_vertexes; i++){
         list[i] = new Node(-1, -1, NULL);
@@ -134,21 +135,6 @@ void MST_Prim_List_Version::create_mst_by_prim_algorithm() {
     DFS(visited);
 }
 
-bool MST_Prim_List_Version::is_vertex_in_mst(int v, int w, int weight){
-
-    bool is_vertex = true;
-
-    for(int i = 0 ; i < mst_size ; i++){
-        Edge edge = mst_edges[i];
-
-        if((edge.vertex == w or edge.vertex_other == w)
-        and (edge.vertex == v or edge.vertex_other == v) and edge.weight == weight){
-            is_vertex = false;
-        }
-    }
-    return is_vertex;
-}
-
 void MST_Prim_List_Version::DFS(bool *visited) {
     int shortest_path = INT_MAX;
 
@@ -157,17 +143,19 @@ void MST_Prim_List_Version::DFS(bool *visited) {
     Node *helper;
 
     for (int k = 0 ; k < this -> number_of_vertexes ; k++) {
-        if (visited[k]) {                                       //przeszukujemy tylko krawedzie odwiedzonych wierzcholkow
+        if (visited[k]) {
 
-            Node *node = list[k];           //jesli ta sama krawedz jest w dwoch miejsca
-                                            // to wartosc mis_in_mst zmieniam tylko w jednym z tych miejsc
+            Node *node = list[k];
+
             while (true) {
                 node = node->next;
                 if(node == NULL){
                     break;
                 }
 
-                if (node->is_in_mst == false) {
+                int v = node -> vertex;
+
+                if (!node->is_in_mst and !visited[v]) {
                     if (node->weight < shortest_path) {
                         shortest_path = node->weight;
                         start_v = k;
@@ -176,13 +164,14 @@ void MST_Prim_List_Version::DFS(bool *visited) {
                     }
                 }
             }
+            node = nullptr;
         }
     }
 
-    if (end_v != -1){
+    if (end_v != -1 and mst_size < number_of_vertexes-1){
         Edge edge(start_v, end_v, shortest_path);
         helper -> is_in_mst = true;
-        this -> mst_edges[mst_size] = edge;
+        mst_edges[mst_size] = edge;
         mst_size ++;
         visited[end_v] = true;
 
@@ -196,7 +185,7 @@ void MST_Prim_List_Version::DFS(bool *visited) {
 
             same_node_of_other_vertex = same_node_of_other_vertex -> next;
         }
-
+        helper = NULL;
         DFS(visited);
     }
 }
